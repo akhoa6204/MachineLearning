@@ -70,10 +70,10 @@ class YoloDetect():
                     # Kiểm tra xâm nhập
                     if isInside(points, centroid):
                         frame = self.alert(frame)
-                        self.is_recording = True 
+                        # self.is_recording = True 
                         self.last_alert = datetime.datetime.utcnow()
-                    else:
-                        if self.is_recording: 
-                            if (datetime.datetime.utcnow() - self.last_alert).total_seconds() > 5:
-                                self.is_recording = False 
+                    # else:
+                    #     if self.is_recording: 
+                    #         if (datetime.datetime.utcnow() - self.last_alert).total_seconds() > 5:
+                    #             self.is_recording = False 
         return frame

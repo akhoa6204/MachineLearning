@@ -52,7 +52,7 @@ def send_video_telegram_full_day(video_path):
         bot_token = "7891478750:AAGEElm0zdy5YnjDt1f2Zv9cbbIzl1k7oF4"
         chat_id = "-4713104225"
         api_url = f"https://api.telegram.org/bot{bot_token}/sendVideo"
-
+        time = ' '.join(video_path.split('_')[2:]).replace('.mp4', '')
         if os.path.exists(video_path):
             with open(video_path, 'rb') as video:
                 response = requests.post(
@@ -60,10 +60,10 @@ def send_video_telegram_full_day(video_path):
                     files={'video': video},
                     data={
                         'chat_id': chat_id,
-                        'caption': "Gửi video toàn bộ sự việc 1 ngày !!!"
+                        'caption': f"{time}"
                     }
                 )
-            print("Gửi video toàn bộ 1 ngày " + ("thành công!" if response.status_code == 200 else "thất bại!"))
+            print(f"Gửi video {video_path} " + ("thành công!" if response.status_code == 200 else "thất bại!"))
         else:
             print("Không tìm thấy file video:", video_path)
 

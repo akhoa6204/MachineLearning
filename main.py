@@ -32,21 +32,22 @@ def handle_click(event, x, y, flags, points):
                 points.remove(point)
                 print(f"Xóa điểm: {point}")
                 break 
-
 def draw_polygon(frame, points):
     for point in points:
         frame = cv2.circle(frame, (point[0], point[1]), 5, (0,0,255), -1)
 
     frame = cv2.polylines(frame, [np.int32(points)], False, (255,0,0), thickness=2)
     return frame
-
 def start_recording(fps, video_resolution, current_time):
     start_hour = current_time.replace(minute=0, second=0, microsecond=0)
     end_time = start_hour + datetime.timedelta(hours=1)
+    
     print(f"Bắt đầu ghi liên tục vào {current_time.strftime(r'%d-%m-%Y-%H-%M')}")
+    
     fourcc = cv2.VideoWriter_fourcc(*'mp4v') 
     file_name = f'daily_recording_{start_hour.strftime(r"%d-%m-%Y")}_{current_time.strftime(r"%H-%M")}_{end_time.strftime(r"%H-%M")}.mp4'
     day_writer = cv2.VideoWriter(file_name, fourcc, fps, video_resolution)
+    
     return file_name, day_writer, end_time
 def stop_recording(day_writer):
     print("Kết thúc video 1 giờ và lưu.")
@@ -66,6 +67,13 @@ def recording(day_writer, frame, frame_count, current_time, end_time):
             check = True
     return check
 
+print('''- Nhấn 'd' để hoàn thành vẽ vùng và bắt đầu detect
+- Nhấn 'q' để thoát chương trình
+- Nhấn 'a' để xóa toàn bộ vùng cảnh báo( Lưu ý chỉ xóa được khi không có đối tượng xâm nhập)
+- Nhấn 'e' để dừng tạm dừng theo dõi 
+- Click chuột trái để chọn các điểm tạo vùng cảnh báo
+- Click chuột phải để xoá điểm cảnh báo
+''')
 while True: 
     ret, frame = video.read()
     frame = cv2.flip(frame, 1)
@@ -86,7 +94,7 @@ while True:
         frame = model.detect(frame, points)
         
     key = cv2.waitKey(1)
-    if key == ord('q') and not model.is_recording:
+    if key == ord('q'):
         cv2.destroyWindow("Intrusion Warning")
         stop_recording(day_writer)
         if thread:
