@@ -103,7 +103,7 @@ while True:
             detect = False
     elif key == ord('e'):
         detect = False
-    elif key == ord('a'):
+    elif key == ord('a') and not detect:
         points = []
     
 
