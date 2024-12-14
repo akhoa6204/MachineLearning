@@ -1,6 +1,5 @@
 import requests
 import os
-from multiprocessing import Process
 
 def send_photo_telegram(img_file):
     try:
@@ -70,5 +69,4 @@ def send_video_telegram_full_day(video_path):
 
     except Exception as ex:
         print("Lỗi:", str(ex))
-        
         
