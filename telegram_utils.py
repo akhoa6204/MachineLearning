@@ -23,31 +23,8 @@ def send_photo_telegram(img_file):
             
     except Exception as ex:
         print("Lỗi:", str(ex))
-        
+            
 def send_video_telegram(video_path):
-    try:
-        bot_token = "7891478750:AAGEElm0zdy5YnjDt1f2Zv9cbbIzl1k7oF4"
-        chat_id = "-4713104225"
-        api_url = f"https://api.telegram.org/bot{bot_token}/sendVideo"
-
-        if os.path.exists(video_path):
-            with open(video_path, 'rb') as video:
-                response = requests.post(
-                    api_url,
-                    files={'video': video},
-                    data={
-                        'chat_id': chat_id,
-                        'caption': "⚠️ Phát hiện xâm nhập! Video ghi lại 5 giây trước và sau sự kiện."
-                    }
-                )
-            print("Gửi video cảnh báo " + ("thành công!" if response.status_code == 200 else "thất bại!"))
-        else:
-            print("Không tìm thấy file video:", video_path)
-
-    except Exception as ex:
-        print("Lỗi:", str(ex))
-        
-def send_video_telegram_full_day(video_path):
     try:
         bot_token = "7891478750:AAGEElm0zdy5YnjDt1f2Zv9cbbIzl1k7oF4"
         chat_id = "-4713104225"
@@ -64,6 +41,7 @@ def send_video_telegram_full_day(video_path):
                     }
                 )
             print(f"Gửi video {video_path} " + ("thành công!" if response.status_code == 200 else "thất bại!"))
+            os.remove(video_path)
         else:
             print("Không tìm thấy file video:", video_path)
 

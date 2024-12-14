@@ -3,7 +3,6 @@ from shapely.geometry.polygon import Polygon
 import cv2
 from telegram_utils import send_photo_telegram
 import datetime
-import asyncio
 from ultralytics import YOLO
 import threading
 
@@ -26,7 +25,6 @@ class YoloDetect():
         self.model = YOLO('yolov8n.pt')  # or 'yolov8s.pt', 'yolov8m.pt', 'yolov8l.pt', 'yolov8x.pt'
         self.last_alert = None
         self.alert_telegram_each = 15  # seconds
-        self.is_recording = False 
 
     def alert(self, img):
         cv2.putText(img, "ALARM!!!!", (10, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
@@ -70,10 +68,6 @@ class YoloDetect():
                     # Kiểm tra xâm nhập
                     if isInside(points, centroid):
                         frame = self.alert(frame)
-                        # self.is_recording = True 
                         self.last_alert = datetime.datetime.utcnow()
-                    # else:
-                    #     if self.is_recording: 
-                    #         if (datetime.datetime.utcnow() - self.last_alert).total_seconds() > 5:
-                    #             self.is_recording = False 
+
         return frame

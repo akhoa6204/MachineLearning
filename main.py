@@ -2,7 +2,7 @@ import cv2
 import threading
 from yolodetect import YoloDetect
 import numpy as np
-from telegram_utils import send_video_telegram_full_day
+from telegram_utils import send_video_telegram
 import datetime
 
 video = cv2.VideoCapture(0)  # Mở webcam
@@ -54,7 +54,7 @@ def stop_recording(day_writer):
     day_writer.release()
 def send_video(file_name):
     print('Đang gửi video...')
-    thread = threading.Thread(target=send_video_telegram_full_day, args=(file_name,))
+    thread = threading.Thread(target=send_video_telegram, args=(file_name,))
     thread.start()
     return thread
 def recording(day_writer, frame, frame_count, current_time, end_time):
