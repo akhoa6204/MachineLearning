@@ -1,12 +1,13 @@
 import requests
 import os
+import datetime
 
-def send_photo_telegram(img_file):
+def send_photo_telegram(img_file, time):
     try:
         bot_token = "7891478750:AAGEElm0zdy5YnjDt1f2Zv9cbbIzl1k7oF4"
         chat_id = "-4713104225"
         api_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
-        
+        time = time.strftime(r'%Y-%m-%d %H:%M')
         if os.path.exists(img_file):
             with open(img_file, 'rb') as photo:
                 response = requests.post(
@@ -14,7 +15,7 @@ def send_photo_telegram(img_file):
                     files={'photo': photo},
                     data={
                         'chat_id': chat_id,
-                        'caption': "⚠️ Phát hiện xâm nhập!"
+                        'caption': f"⚠️ Phát hiện xâm nhập vào {time}!"
                     }
                 )
             print("Gửi cảnh báo " + ("thành công!" if response.status_code == 200 else "thất bại!"))
