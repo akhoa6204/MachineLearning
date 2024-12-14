@@ -1,7 +1,7 @@
 from shapely.geometry import Point
 from shapely.geometry.polygon import Polygon
 import cv2
-from telegram_utils import send_telegram_photo
+from telegram_utils import send_photo_telegram
 import datetime
 import asyncio
 from ultralytics import YOLO
@@ -36,8 +36,9 @@ class YoloDetect():
             self.last_alert = datetime.datetime.utcnow()
             cv2.imwrite("alert.png", img)
             img_file = "alert.png"
-            thread = threading.Thread(target=send_telegram_photo, args=(img_file),  daemon=True)
+            thread = threading.Thread(target=send_photo_telegram, args =[img_file,])
             thread.start()
+            thread.join()
 
         return img        
 
@@ -75,7 +76,4 @@ class YoloDetect():
                         if self.is_recording: 
                             if (datetime.datetime.utcnow() - self.last_alert).total_seconds() > 5:
                                 self.is_recording = False 
-
-                            
-
         return frame
