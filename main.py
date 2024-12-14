@@ -16,10 +16,10 @@ video.set(cv2.CAP_PROP_FRAME_WIDTH, video_resolution[0])
 video.set(cv2.CAP_PROP_FRAME_HEIGHT, video_resolution[1])
 
 frame_count = 0
-model = YoloDetect()
-
 day_writer = None
 thread = None
+
+model = YoloDetect()
 
 def handle_click(event, x, y, flags, points):
     if event == cv2.EVENT_LBUTTONDOWN:
@@ -31,12 +31,14 @@ def handle_click(event, x, y, flags, points):
                 points.remove(point)
                 print(f"Xóa điểm: {point}")
                 break 
+
 def draw_polygon(frame, points):
     for point in points:
         frame = cv2.circle(frame, (point[0], point[1]), 5, (0,0,255), -1)
 
     frame = cv2.polylines(frame, [np.int32(points)], False, (255,0,0), thickness=2)
     return frame
+
 def start_recording(fps, video_resolution, current_time):
     start_hour = current_time.replace(minute=0, second=0, microsecond=0)
     end_time = start_hour + datetime.timedelta(hours=1)
@@ -109,7 +111,7 @@ while True:
             detect = False
     elif key == ord('e'):
         detect = False
-    elif key == ord('a') and not detect:
+    elif key == ord('a'):
         points = []
     
 
