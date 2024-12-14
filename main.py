@@ -15,7 +15,6 @@ fps = 20
 video.set(cv2.CAP_PROP_FRAME_WIDTH, video_resolution[0])
 video.set(cv2.CAP_PROP_FRAME_HEIGHT, video_resolution[1])
 
-frame_lock = threading.Lock() 
 frame_count = 0
 model = YoloDetect()
 
@@ -58,12 +57,10 @@ def send_video(file_name):
     thread.start()
     return thread
 def recording(day_writer, frame, frame_count, current_time, end_time):
-    global frame_lock
     check = False
     if day_writer:
         if frame_count % 5 == 0:
-            with frame_lock: 
-                day_writer.write(frame)
+            day_writer.write(frame)
         if current_time >= end_time: 
             check = True
     return check
