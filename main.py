@@ -53,6 +53,7 @@ def stop_recording(day_writer):
     print("Kết thúc video 1 giờ và lưu.")
     day_writer.release()
 def send_video(file_name):
+    print('Đang gửi video...')
     thread = threading.Thread(target=send_video_telegram_full_day, args=(file_name,))
     thread.start()
     return thread
