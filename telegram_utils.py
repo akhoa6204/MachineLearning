@@ -2,11 +2,12 @@ import requests
 import os
 import datetime
 
-def send_photo_telegram(img_file, time):
+def send_photo_telegram(img_file):
     try:
         bot_token = "7891478750:AAGEElm0zdy5YnjDt1f2Zv9cbbIzl1k7oF4"
         chat_id = "-4713104225"
         api_url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
+        time = datetime.datetime.now()
         time = time.strftime(r'%Y-%m-%d %H:%M')
         if os.path.exists(img_file):
             with open(img_file, 'rb') as photo:

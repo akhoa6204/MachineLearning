@@ -50,14 +50,17 @@ def start_recording(fps, video_resolution, current_time):
     day_writer = cv2.VideoWriter(file_name, fourcc, fps, video_resolution)
     
     return file_name, day_writer, end_time
+
 def stop_recording(day_writer):
     print("Kết thúc video 1 giờ và lưu.")
     day_writer.release()
+     
 def send_video(file_name):
     print('Đang gửi video...')
     thread = threading.Thread(target=send_video_telegram, args=(file_name,))
     thread.start()
     return thread
+
 def recording(day_writer, frame, frame_count, current_time, end_time):
     check = False
     if day_writer:
@@ -69,11 +72,12 @@ def recording(day_writer, frame, frame_count, current_time, end_time):
 
 print('''- Nhấn 'd' để hoàn thành vẽ vùng và bắt đầu detect
 - Nhấn 'q' để thoát chương trình
-- Nhấn 'a' để xóa toàn bộ vùng cảnh báo( Lưu ý chỉ xóa được khi không có đối tượng xâm nhập)
+- Nhấn 'a' để xóa toàn bộ vùng cảnh báo
 - Nhấn 'e' để dừng tạm dừng theo dõi 
 - Click chuột trái để chọn các điểm tạo vùng cảnh báo
 - Click chuột phải để xoá điểm cảnh báo
 ''')
+
 while True: 
     ret, frame = video.read()
     frame = cv2.flip(frame, 1)
@@ -124,3 +128,7 @@ while True:
 
 video.release()
 cv2.destroyAllWindows()
+
+
+
+

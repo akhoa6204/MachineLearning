@@ -34,9 +34,9 @@ class YoloDetect():
             self.last_alert = datetime.datetime.now()
             cv2.imwrite("alert.png", img)
             img_file = "alert.png"
-            thread = threading.Thread(target=send_photo_telegram, args =[img_file, self.last_alert, ])
+            thread = threading.Thread(target=send_photo_telegram, args =[img_file, ])
             thread.start()
-            thread.join()
+            # thread.join()
 
         return img        
 
@@ -68,6 +68,5 @@ class YoloDetect():
                     # Kiểm tra xâm nhập
                     if isInside(points, centroid):
                         frame = self.alert(frame)
-                        self.last_alert = datetime.datetime.utcnow()
 
         return frame
